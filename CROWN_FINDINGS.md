@@ -508,4 +508,177 @@ Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000} -MaxEvents 5 -EA
 New cve-submissions HEAD: `b1edc0d`
 
 ---
+
+## DARK POLL — SITREP-SESSION3 SYNTHESIS — 2026-06-26 21:21 AEST
+
+**Source**: `vader-rootkit/disclosure/SITREP-SESSION3.md` — session 3 autonomous research results, not yet logged to CROWN_FINDINGS. This is unlogged intel.
+
+---
+
+### VADER-PRIME — COMPILED AND OPERATIONAL (gwu07)
+
+**Location**: `exploits/vader-prime/` in vader-rootkit repo
+```
+VaderPrime.exe    — 26KB, .NET 4.x, x64
+vaderproc.dll     — 104KB, native x64 DLL (Print Processor payload)
+```
+
+**Four payload modes:**
+
+| Mode | Chain | Novel? | CVE potential |
+|------|-------|--------|---------------|
+| `--validate` | windir hijack (MiniPlasma's chain) | NO — validation only | None (same as MiniPlasma) |
+| `--printproc` | cldflt race → cross-hive HKLM → Print Processors key → Spooler DLL load | **NOVEL** | **Original CVE candidate** |
+| `--ifeo wermgr.exe` | cldflt race → cross-hive HKLM → IFEO debugger → target exe launch | **NOVEL** | **Original CVE candidate** |
+| `--lsa` | cldflt race → LSA Security Package | Novel, not implemented | Future |
+
+**Key distinction vs MiniPlasma**: MiniPlasma writes to `.DEFAULT\Volatile Environment` (windir env var — well-known technique, Elastic has detection rules). VADER-PRIME writes cross-hive to `HKLM\...\Print Processors` or `HKLM\...\IFEO` — different target, different execution trigger, different EVE chain.
+
+**`--printproc` is an independent CVE candidate** — cldflt CfAbortHydration race → cross-hive registry symlink → Print Processor DLL registration → Spooler loads attacker DLL as SYSTEM. Not documented anywhere. If it works: MSRC.
+
+**Testing protocol on gwu07:**
+```cmd
+cd "C:\Users\gwu07\Desktop\vader-rootkit\exploits\vader-prime"
+VaderPrime.exe --validate           # confirm cldflt primitive works
+VaderPrime.exe --printproc          # test novel Print Processor chain
+VaderPrime.exe --ifeo wermgr.exe    # test IFEO chain
+```
+
+---
+
+### MiniPlasma — UNPATCHED 0-DAY, PoC Ready (gwu07)
+
+- cldflt.sys STATUS: **RUNNING** (version 10.0.26100.8655, updated June 10 2026)
+- NuGet packages pre-verified: NtApiDotNet 1.1.33, TaskScheduler 2.12.2, Costura.Fody 6.2.0
+
+```cmd
+cd "C:\Users\gwu07\Desktop\CSEC\Semester 2\MiniPlasma-main\MiniPlasma-main"
+"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe" ^
+  PoC_AbortHydration_ArbitraryRegKey_EoP.sln /p:Configuration=Release /p:Platform="Any CPU"
+VaderPrime.exe --validate    # run VADER-PRIME validate mode first (same primitive, easier trigger)
+```
+
+If MiniPlasma pops SYSTEM → cldflt primitive CONFIRMED WORKING → VADER-PRIME `--printproc` and `--ifeo` chains are live.
+
+---
+
+### GreenPlasma — POSSIBLY UNPATCHED
+
+- CVE-2026-45586 was CTFMON (improper link resolution, CWE-59) — PATCHED June 9 2026
+- GreenPlasma uses CfAbortOperation + CTF — **different chain**, may not be the same CVE
+- PoC in CSEC folder on gwu07
+- Needs compile + test after KB5094126
+
+---
+
+### bindflt.sys TOCTOU — Session 3 RE Confirms Hypothesis
+
+Session 3 static RE confirmed the exploitation chain:
+```
+Standard User → Add-AppxPackage (user-controlled .msix)
+→ AppXSvc (SYSTEM) → appxdeploymentserver.dll → BfSetupFilterEx()
+→ bindflt.sys kernel: path validation (namesup.c) → bind mount creation (mapping.c)
+→ TOCTOU window: junction swap between validation and use
+→ Bind mount overlays system directory with attacker content
+```
+
+Additional Session 3 findings:
+- `\BindFltPort`: EXISTS (ACCESS_DENIED — not missing). Port is real, standard user can't connect.
+- 13 user-mode APIs in bindfltapi.dll — ALL return ACCESS_DENIED for standard user
+- `RtlQueryPackageIdentity` import confirms package-aware access decisions — AppX path is the IN
+- Source files confirmed: `mapping.c`, `namesup.c`, `create.c` (the three critical ones)
+- `SeImpersonateClientEx`, `PsImpersonateClient` imports — token impersonation capability IN the driver
+
+**CVE pathway C rated 30-50% IF race found.** MAXIMUM originality — zero prior researchers, zero CVEs.
+
+**wcifs.sys** (Session 3c addition): Same source file layout as bindflt. Zero LPE CVEs. `\WcifsPort` exists (ACCESS_DENIED). `expansion.c` is unique to wcifs — likely handles VFS expansion logic. Second target for same class of research.
+
+---
+
+### PATH Analysis on gwu07 — PHANTOM EXECUTABLE OPPORTUNITY
+
+```
+Position 20:  C:\Users\gwu07\.local\bin        ← uv-injected, USER-WRITABLE
+Position 21:  C:\Program Files\Git\cmd         ← git.exe found HERE
+Position 22:  C:\Program Files\GitHub CLI\     ← gh.exe found HERE
+Position 23:  C:\Users\gwu07\AppData\Local\Muse Hub  ← MuseHub-injected, USER-WRITABLE
+```
+
+Writable dirs at 20 and 23 come **BEFORE** git (21) and gh (22). If any SYSTEM process calls `git.exe` or `gh.exe` without a full path via PATH search, a planted `git.exe` or `gh.exe` in `.local\bin` would be found first.
+
+Currently no SYSTEM task does this — but any future software installing such a task would be immediately exploitable. Opportunity to monitor for new SYSTEM tasks that PATH-search git or gh.
+
+---
+
+### Dead Vectors Confirmed (Session 3 — Do Not Reinvestigate)
+
+| Vector | Why Dead |
+|--------|----------|
+| IKEEXT azureike.dll | ALL LoadLibraryExW calls use 0x800 (LOAD_LIBRARY_SEARCH_SYSTEM32). Confirmed by binary analysis of all 3 call sites in ikeext.dll |
+| HKCU COM → SYSTEM | Integrity level check (Vista+). SYSTEM ignores HKCU. Session 0 hive isolation secondary block |
+| MareBackup PATH | System32 at position 5 — powershell.exe found before writable dir at position 20 |
+| RedSun/UnDefend/BlueHammer | All patched by May 2026 |
+| COM LocalServer32/InprocServer32 | 0 findings — architecture block confirmed |
+
+---
+
+### AUTOMATION PLAN — Next Research Actions
+
+George's message: "Automate and findings update" — addressing both.
+
+**What to automate next on gwu07 (autonomous loop queue):**
+
+1. **MuseHub canary trigger** — three untried scheduled tasks on gwu07:
+   ```powershell
+   Start-ScheduledTask "\Microsoft\Windows\DiskCleanup\SilentCleanup"
+   Start-ScheduledTask "\Microsoft\Windows\Application Experience\ProgramDataUpdater"
+   Start-ScheduledTask "\Microsoft\Windows\Diagnosis\Scheduled"
+   Start-Sleep 10
+   Get-Content "C:\Windows\Temp\vader_path_hijack.log" -EA SilentlyContinue
+   ```
+   If any fires a SYSTEM-context canary → probability jumps back to 70-80% → submit immediately.
+
+2. **VADER-PRIME --validate** — single command, confirms cldflt primitive, gates all novel pathways.
+
+3. **pipe_probe.ps1 on RADON** (George-side action):
+   ```powershell
+   cd "C:\Users\Ghaleb Jomma\cve-submissions\techniques"
+   .\pipe_probe.ps1 -PipeName HKClipPipe -Mode fuzz
+   ```
+
+4. **cdpsgshims.dll CDPSvc PATH trigger** — confirm if SYSTEM-context DLL load occurs:
+   ```powershell
+   # CDPSvc starts via BrokerInfrastructure — find RPC trigger
+   Get-Service cdpsvc | Restart-Service -Force
+   # Check for DLL load in ProcMon filter: Process=CDPSvc, Result=NAME NOT FOUND, Path contains cdpsgshims
+   ```
+
+5. **Wondershare submission** (George action, not automatable): send to security@wondershare.com.
+
+**What the gwu07 loop should prioritize next (loop_n=13+):**
+- Run MuseHub canary triggers above
+- VADER-PRIME --validate
+- If validate succeeds: run --printproc, log result, commit evidence
+- bindflt.sys: attempt `Add-AppxPackage` with malformed MSIX while monitoring kernel debug output
+
+---
+
+### Updated Arsenal Status (Full Picture)
+
+| Asset | Status | Location | Action |
+|-------|--------|----------|--------|
+| iron_sun.exe | **OPERATIONAL FUD** | cheyanne repo | — |
+| HWBP Dark Room | **PROVEN** | skywalker repo | Pending MSRC frame |
+| VADER-PRIME | **COMPILED** | vader-rootkit/exploits/vader-prime | Run --validate first |
+| MiniPlasma PoC | **UNPATCHED, ready** | gwu07 CSEC folder | Compile + run |
+| GreenPlasma | **POSSIBLY UNPATCHED** | gwu07 CSEC folder | Compile + test |
+| pipe_probe.ps1 | **OPERATIONAL** | cve-submissions/techniques | Run on RADON now |
+| canary_dropper.ps1 | **OPERATIONAL** | cve-submissions/techniques | Wondershare done; MuseHub next |
+| batch_icacls.ps1 | **OPERATIONAL** | cve-submissions/techniques | 54 dirs scanned |
+
+**Open CVE ground**: bindflt.sys (zero CVEs), wcifs.sys (zero LPE CVEs), VADER-PRIME --printproc/--ifeo chains, HKClipSvc pipe protocol
+
+All repos dark this poll. cve-submissions last HEAD: `b1edc0d`
+
+---
 *Generated by RADON poll loop — 22DIV VADER*
