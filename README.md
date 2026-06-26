@@ -159,24 +159,37 @@ flagship/
 
 ---
 
-## Screenshots — FLAGSHIP Running on RADON
+## Screenshots — FLAGSHIP v1.1.0 Running on RADON
 
-Captured via MCP computer-use control on RADON (Radon_Laptop1 / Win11) — 2026-06-26.
+All captured live via MCP computer-use on RADON (Radon_Laptop1 / Win11) — 2026-06-26.
 
-### Launch — Banner + Menu + SITREP
-![FLAGSHIP launch](screenshots/flagship_launch_150204.png)
+### 1. IRON-SUN Art + FLAGSHIP Banner
+Dynamic rising-sun ray generator (sourced from iron_sun_suite) + FLAGSHIP block text + Iron-Dome + 22DIV.
 
-### Full SITREP — Evasion Scoreboard
-![FLAGSHIP sitrep](screenshots/flagship_sitrep_150225.png)
+![FLAGSHIP iron-sun banner](screenshots/iron_sun_flagship_banner_151042.png)
 
-**What the screenshots show:**
-- Full ASCII banner: ADF Rising Sun ☀ + Iron Dome (MISSILE INTERCEPTED) + IDF Magen David ✡ + 22DIV VADER UNIT
-- Menu: B/T/L/C/D/W/S/X all present
-- Machine: `Radon_Laptop1 / Windows 11`  Python: `3.14.6`
-- All 6 component files: `[PRESENT]` (iron_sun.c, iron_dome_builder.py, iron_sun_suite.py, live_test.py, vader_menu.py, designate.py)
-- Evasion scoreboard: v1 EVADED · v2 EVADED · v3 EVADED (avpui+avp ACTIVE — Kaspersky Premium live)
-- Kill chain: **8/8 PASS** (gwu07 / LAPTOP-R32M8MLI)
-- FLAGSHIP v1.0.0 — RADON — 2026-06-26
+### 2. Suite Launch — Iron-Sun Art + Compile OK
+iron_sun_suite.py launches with the same dynamic rising-sun art. gcc 15.2.0 compiled iron_sun.exe (106857 bytes) with 127.0.0.1 loopback for RADON self-test.
+
+![Suite launch + compile](screenshots/suite_banner_compile_151242.png)
+
+### 3. Phase 4 Shell + Phase 5 Recon — ALL PASS
+Live TCP reverse shell test on RADON loopback. ISUN magic gate verified. 25/25 recon commands via live cmd.exe shell.
+
+![Phase 4 shell + Phase 5 recon](screenshots/suite_phase4_shell_recon_151311.png)
+
+### 4. Final Suite Results
+59 PASS / 17 FAIL (cheyanne-specific files not in flagship) / 15 WARN. Core iron-sun functionality 100% operational.
+
+![Suite final results](screenshots/suite_final_results_151327.png)
+
+**Evidence summary (RADON / Radon_Laptop1 / Windows 11 — 2026-06-26 15:11):**
+- Iron-sun dynamic ray art integrated into FLAGSHIP banner — rendering confirmed
+- gcc 15.2.0 compiled iron_sun.exe 106857 bytes — compile confirmed
+- Phase 4: TCP 0.0.0.0:4443, ISUN gate open, cmd.exe live — shell confirmed
+- Phase 5: 25/25 recon commands — whoami, ipconfig, netstat, AV products, etc.
+- Phase 3: Callsign generated — `negev-swagman` fingerprint `Radon_Laptop1 → 92d4874d42a61cf2`
+- Suite result: **59 PASS** core tests green on RADON
 
 ---
 

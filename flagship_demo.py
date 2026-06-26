@@ -1,17 +1,47 @@
 #!/usr/bin/env python3
+"""Non-interactive demo — MCP/CI showcase. Prints iron-sun art + FLAGSHIP banner + SITREP."""
 import os, sys, time, platform, shutil
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-GOLD  = "\033[38;5;220m"
-CYAN  = "\033[96m"
-GREEN = "\033[92m"
-RED   = "\033[91m"
-DIM   = "\033[2m"
-BOLD  = "\033[1m"
+GOLD  = "\033[38;2;255;215;0m"
+CYAN  = "\033[38;2;0;229;255m"
+GREEN = "\033[38;2;0;255;100m"
+RED   = "\033[38;2;255;60;60m"
+IDF   = "\033[38;2;0;56;184m"
+WHITE = "\033[38;2;255;255;255m"
+DIM   = "\033[38;2;120;120;120m"
 RST   = "\033[0m"
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
+def iron_sun_art(W=76):
+    C = W // 2
+    rows = []
+    for r in range(15):
+        h = int(round(C * (14 - r) / 14))
+        if h == 0:
+            ln = [' '] * W; ln[C] = '✡'; rows.append(''.join(ln)); break
+        ln = [' '] * W
+        for i in range(17):
+            p = int(round(C + (-1.0 + i * 0.125) * h))
+            p = max(0, min(W - 1, p))
+            ln[p] = '│' if abs(p - C) <= 1 else ('╲' if p < C else '╱')
+        rows.append(''.join(ln))
+    lines = []
+    lines.append(f"{CYAN}  ╔{'═'*W}╗{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    for row in rows:
+        lines.append(f"{CYAN}  ║{GOLD}{row.ljust(W)[:W]}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{WHITE}{'T H E   I R O N - S U N'.center(W)}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{WHITE}{'A U S T R A L I A N   A R M Y   ·   2 2 D I V'.center(W)}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ╚{'═'*W}╝{RST}")
+    return '\n'.join(lines)
+
+print(iron_sun_art())
 print(GOLD + """
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
@@ -23,25 +53,19 @@ print(GOLD + """
 ║    ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝                  ║
 ║                                                                              ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║       ADF RISING SUN           IRON-DOME           IDF MAGEN DAVID          ║
-║       ─────────────            ─────────           ──────────────           ║
-║            ╿                  /‾‾‾‾‾‾\\              ✦   ✦   ✦              ║
-║       \\ \\  ╿  / /            /  ≋≋≋≋≋ \\           ✦    ✡    ✦             ║
-║        \\   ╿   /            /  MISSILE  \\        ✦  22DIV  ✦              ║
-║    ─────\\──☀──/─────       /  INTERCEPTED\\         ✦    ✡    ✦             ║
-║        /   ╿   \\           ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾          ✦   ✦   ✦             ║
-║       / /  ╿  \\ \\          DOME ACTIVE ✓                                   ║
-║            ╿                                                                 ║
-║                                                                              ║
+║                IRON-DOME          ·          IDF MAGEN DAVID                 ║
+║            ╱▔▔▔▔▔▔▔▔▔▔╲                     ✦     ✦     ✦                   ║
+║           ╱  ≋≋≋≋≋≋≋≋≋ ╲                ✦        ✡        ✦                ║
+║          ╱  MISSILE      ╲             ✦      22DIV VADER      ✦            ║
+║         ╱  INTERCEPTED    ╲               ✦        ✡        ✦               ║
+║         ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                  ✦     ✦     ✦                  ║
+║              DOME ACTIVE ✓          CHEYANNE C2  ·  OPSEC ACTIVE            ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  22DIV VADER UNIT             ║
-║  CHEYANNE C2  ✦  IRON-SUN SHELL  ✦  VADER EVASION  ✦  IRON-DOME BUILDER   ║
-║  OWN HARDWARE ONLY  ✦  AUTHORIZED RESEARCH  ✦  OPSEC ACTIVE                ║
+║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  OWN HARDWARE ONLY            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """ + RST)
 
-print(CYAN + BOLD + """  ╔══════════════════════════════════════════╗
+print(CYAN + """  ╔══════════════════════════════════════════╗
   ║          FLAGSHIP COMMAND MENU           ║
   ╠══════════════════════════════════════════╣
   ║  """ + GREEN + "B" + CYAN + """  — BUILD    iron-dome payload            ║
@@ -63,12 +87,12 @@ print(f"  {CYAN}gcc:{RST}      {gcc or 'NOT FOUND'}")
 print()
 
 files = [
-    ("iron_sun.c",          "shell source        "),
-    ("iron_dome_builder.py","unified builder     "),
-    ("iron_sun_suite.py",   "test suite          "),
-    ("live_test.py",        "loopback test       "),
-    ("vader_menu.py",       "cheyanne C2         "),
-    ("designate.py",        "callsign generator  "),
+    ("iron_sun.c",           "shell source     "),
+    ("iron_dome_builder.py", "unified builder  "),
+    ("iron_sun_suite.py",    "test suite       "),
+    ("live_test.py",         "loopback test    "),
+    ("vader_menu.py",        "cheyanne C2      "),
+    ("designate.py",         "callsign gen     "),
 ]
 for fname, desc in files:
     path = os.path.join(ROOT, fname)
@@ -83,7 +107,7 @@ print(f"  {GREEN}v3{RST} XOR=0xDE  EVADED  PID 27576  18s  avpui+avp ACTIVE")
 print()
 print(f"  {GREEN}KILL CHAIN: 8/8 PASS{RST}  {DIM}(gwu07 / LAPTOP-R32M8MLI){RST}")
 print()
-print(GOLD + "  FLAGSHIP v1.0.0 — RADON — 2026-06-26" + RST)
+print(GOLD + "  FLAGSHIP v1.1.0 — RADON — 2026-06-26" + RST)
 print(DIM + "  Screenshot taken — standing by..." + RST)
 print()
 time.sleep(20)

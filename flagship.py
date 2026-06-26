@@ -10,16 +10,50 @@ Combines: iron-sun (TCP shell) + CHEYANNE (C2) + VADER (evasion) + IRON-DOME (bu
 import os, sys, subprocess, datetime, platform, shutil
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-# ── BANNER ───────────────────────────────────────────────────────────────────
+# ── COLOURS ──────────────────────────────────────────────────────────────────
 
-GOLD  = "\033[38;5;220m"
-CYAN  = "\033[96m"
-GREEN = "\033[92m"
-RED   = "\033[91m"
-WHITE = "\033[97m"
-DIM   = "\033[2m"
+GOLD  = "\033[38;2;255;215;0m"
+CYAN  = "\033[38;2;0;229;255m"
+GREEN = "\033[38;2;0;255;100m"
+RED   = "\033[38;2;255;60;60m"
+IDF   = "\033[38;2;0;56;184m"
+WHITE = "\033[38;2;255;255;255m"
+DIM   = "\033[38;2;120;120;120m"
 BOLD  = "\033[1m"
 RST   = "\033[0m"
+
+# ── IRON-SUN DYNAMIC RAY ART ─────────────────────────────────────────────────
+
+def iron_sun_art(W=76):
+    """Dynamic rising-sun ray generator — sourced from iron_sun_suite.py."""
+    C = W // 2
+    rows = []
+    for r in range(15):
+        h = int(round(C * (14 - r) / 14))
+        if h == 0:
+            ln = [' '] * W; ln[C] = '✡'; rows.append(''.join(ln)); break
+        ln = [' '] * W
+        for i in range(17):
+            p = int(round(C + (-1.0 + i * 0.125) * h))
+            p = max(0, min(W - 1, p))
+            ln[p] = '│' if abs(p - C) <= 1 else ('╲' if p < C else '╱')
+        rows.append(''.join(ln))
+
+    lines = []
+    lines.append(f"{CYAN}  ╔{'═'*W}╗{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    for row in rows:
+        lines.append(f"{CYAN}  ║{GOLD}{row.ljust(W)[:W]}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{WHITE}{'T H E   I R O N - S U N'.center(W)}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{WHITE}{'A U S T R A L I A N   A R M Y   ·   2 2 D I V'.center(W)}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ║{IDF}{'▓'*W}{CYAN}║{RST}")
+    lines.append(f"{CYAN}  ╚{'═'*W}╝{RST}")
+    return '\n'.join(lines)
+
+# ── FLAGSHIP BANNER ───────────────────────────────────────────────────────────
 
 BANNER = f"""
 {GOLD}╔══════════════════════════════════════════════════════════════════════════════╗
@@ -32,21 +66,15 @@ BANNER = f"""
 ║    ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝╚═╝                  ║
 ║                                                                              ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║       ADF RISING SUN           IRON-DOME           IDF MAGEN DAVID          ║
-║       ─────────────            ─────────           ──────────────           ║
-║            ╿                  ╱▔▔▔▔▔▔╲              ✦   ✦   ✦              ║
-║       \\  ╿  / /            ╱  ≋≋≋≋≋ ╲           ✦    ✡    ✦             ║
-║        \\   ╿   /            ╱  MISSILE  ╲        ✦  22DIV  ✦              ║
-║    ─────\\──☀──/─────       ╱  INTERCEPTED╲         ✦    ✡    ✦             ║
-║        /   ╿   \\           ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔          ✦   ✦   ✦             ║
-║       / /  ╿  \\ \\          DOME ACTIVE ✓                                   ║
-║            ╿                                                                 ║
-║                                                                              ║
+║                IRON-DOME          ·          IDF MAGEN DAVID                 ║
+║            ╱▔▔▔▔▔▔▔▔▔▔╲                     ✦     ✦     ✦                   ║
+║           ╱  ≋≋≋≋≋≋≋≋≋ ╲                ✦        ✡        ✦                ║
+║          ╱  MISSILE      ╲             ✦      22DIV VADER      ✦            ║
+║         ╱  INTERCEPTED    ╲               ✦        ✡        ✦               ║
+║         ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔                  ✦     ✦     ✦                  ║
+║              DOME ACTIVE ✓          CHEYANNE C2  ·  OPSEC ACTIVE            ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  22DIV VADER UNIT             ║
-║  CHEYANNE C2  ✦  IRON-SUN SHELL  ✦  VADER EVASION  ✦  IRON-DOME BUILDER   ║
-║  OWN HARDWARE ONLY  ✦  AUTHORIZED RESEARCH  ✦  OPSEC ACTIVE                ║
+║  OPERATOR: rainfantry  ✦  CALLSIGN: RADON  ✦  OWN HARDWARE ONLY            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝{RST}
 """
 
@@ -228,6 +256,7 @@ def sitrep():
 # ── MAIN ─────────────────────────────────────────────────────────────────────
 
 def main():
+    print(iron_sun_art())
     print(BANNER)
 
     # Init log
