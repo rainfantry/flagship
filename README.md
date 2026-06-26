@@ -159,6 +159,28 @@ flagship/
 
 ---
 
+## IRON-DOME v4.0.0 — Build Proof (RADON, 2026-06-26)
+
+`iron_dome_builder.py v4.0.0` synced from gwu07/Oracle and run live on RADON.
+
+### IDF Cyber Squad ANSI Banner + ► PHASE: BUILD
+Dynamic converging-ray engine — 17 rays across 180°, gold on IDF blue, converges to ✡.
+"✡ IDF CYBER SQUAD ✡ 22DIV ✡ VADER ✡ ORACLE ✡" · LAT -33.8688 LONG 151.2093
+
+![Builder v4.0.0 IDF Cyber Squad banner](screenshots/builder_v4_idf_cybersquad_154336.png)
+
+### BUILD COMPLETE — iron_dome_v1.exe + PS1 stager + deploy doc
+- [1/4] C source generated — XOR 0xFC + VADER AMSI/ETW bypass injected
+- [2/4] PE compiled — gcc 15.2.0 → `iron_dome_v1.exe` **44,032 bytes** · SHA `18B643ADF9267C47CEC5AE198460A2D9D895925166C9F8445625B56319DCAFBF`
+- [3/4] Ghost PS1 stager — zero-width Unicode, invisible to KAV content scan
+- [4/4] Deployment doc written
+
+![Builder v4.0.0 build complete](screenshots/builder_v4_build_complete_154222.png)
+
+**Build config:** `--target 127.0.0.1 --port 4443 --xor 0xFC --vader` · VADER ACTIVE · 8-layer evasion stack
+
+---
+
 ## Screenshots — FLAGSHIP v1.1.0 Running on RADON
 
 All captured live via MCP computer-use on RADON (Radon_Laptop1 / Win11) — 2026-06-26.
