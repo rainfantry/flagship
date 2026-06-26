@@ -159,15 +159,36 @@ flagship/
 
 ---
 
+## Screenshots — FLAGSHIP Running on RADON
+
+Captured via MCP computer-use control on RADON (Radon_Laptop1 / Win11) — 2026-06-26.
+
+### Launch — Banner + Menu + SITREP
+![FLAGSHIP launch](screenshots/flagship_launch_150204.png)
+
+### Full SITREP — Evasion Scoreboard
+![FLAGSHIP sitrep](screenshots/flagship_sitrep_150225.png)
+
+**What the screenshots show:**
+- Full ASCII banner: ADF Rising Sun ☀ + Iron Dome (MISSILE INTERCEPTED) + IDF Magen David ✡ + 22DIV VADER UNIT
+- Menu: B/T/L/C/D/W/S/X all present
+- Machine: `Radon_Laptop1 / Windows 11`  Python: `3.14.6`
+- All 6 component files: `[PRESENT]` (iron_sun.c, iron_dome_builder.py, iron_sun_suite.py, live_test.py, vader_menu.py, designate.py)
+- Evasion scoreboard: v1 EVADED · v2 EVADED · v3 EVADED (avpui+avp ACTIVE — Kaspersky Premium live)
+- Kill chain: **8/8 PASS** (gwu07 / LAPTOP-R32M8MLI)
+- FLAGSHIP v1.0.0 — RADON — 2026-06-26
+
+---
+
 ## WATCH — Screenshot Monitor
 
 `W` from the menu takes 3 desktop screenshots at 5-second intervals, saved to `screenshots/` with timestamps. Requires `mss` (auto-installed on first run).
 
 ```
 screenshots/
-  watch_1_145510.png
-  watch_2_145515.png
-  watch_3_145520.png
+  flagship_launch_150204.png    — banner + menu + sitrep (MCP capture)
+  flagship_sitrep_150225.png    — sitrep + evasion scoreboard (MCP capture)
+  flagship_menu_150225.png      — menu + kill chain results (MCP capture)
 ```
 
 ---
